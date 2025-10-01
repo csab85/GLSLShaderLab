@@ -2,20 +2,25 @@
 out vec4 FragColor;
 uniform float iTime;
 uniform vec2 iResolution;
-
+in vec2 TexCoord;
 void main()
 {
-    vec2 uv = gl_FragCoord.xy / iResolution.xy;
-    float prop=iResolution.x/iResolution.y;
+    //vec2 uv = gl_FragCoord.xy / iResolution.xy;
+    vec2 uv = TexCoord;
+    float wave = (cos ( (iTime + uv.x) * 2) * 0.1)/4 + 0.25;
+FragColor = vec4(0.0, 0.0, 0.0, 0.0);
 
-    float x= length(vec2(uv.x*prop,uv.y)-vec2(prop/2.0,0.5));
-   
-   FragColor = vec4(1,1,1, 1.0);
-   
-   if(x<0.3)
+    if (uv.y < wave) 
     {
-        FragColor = vec4(1,0,0, 1.0);
-
+     FragColor = vec4(1.0, 0.0, 0.0, 0.0);
     }
-    
+     if (uv.y < wave + 0.1) 
+    {
+     FragColor = vec4(1.0, 1.0, 0.0, 0.0);
+    }
+    else if (uv.y < wave + 0.4)
+    {
+     FragColor = vec4(1.0, 0.0, 0.0, 0.0);
+    }
+ 
 }
